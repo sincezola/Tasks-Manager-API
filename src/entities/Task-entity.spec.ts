@@ -1,4 +1,4 @@
-import { Task } from './Tasks';
+import { Task } from './Task';
 
 describe('Instanciate an task', () => {
   test('Should not be able to create a task without title', () => {
@@ -6,7 +6,7 @@ describe('Instanciate an task', () => {
       title: "",
       description: "Tenho que lavar a louça amanhã",
       status: "pendente",
-      userId: "2",
+      userId: 2,
     };
 
     expect(() => new Task(taskProps)).toThrow();
@@ -17,7 +17,7 @@ describe('Instanciate an task', () => {
       title: "Lavar a louça",
       description: "Tenho que lavar a louça amanhã",
       status: "",
-      userId: "2",
+      userId: 2,
     };
 
     expect(() => new Task(taskProps)).toThrow();
@@ -28,7 +28,7 @@ describe('Instanciate an task', () => {
       title: "Lav",
       description: "Tenho que lavar a louça amanhã",
       status: "pendente",
-      userId: "2",
+      userId: 2,
     };
 
     expect(() => new Task(taskProps)).toThrow();
@@ -39,7 +39,7 @@ describe('Instanciate an task', () => {
       title: "Lavar a louça",
       description: "Tenho que lavar a louça amanhã",
       status: "pendente",
-      userId: "2",
+      userId: 2,
     };
 
     const task = new Task(taskProps);

@@ -11,10 +11,21 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
+  test('Should not be able to create a user with a id minor than 1', () => {
+    const userProps = {
+      id: 0,
+      name: 'Frederico',
+      email: 'fredericocapa@gmail.com',
+      password: '543242',
+    };
+
+    expect(() => new User(userProps)).toThrow();
+  });
+
   test('Should not be able to create a user with an invalid email', () => {
     const userProps = {
       name: 'Frederico',
-      email: 'fredericocapagmail.com',
+      email: 'fredericocapagmail',
       password: '543242',
     };
 
@@ -31,11 +42,23 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
+  test('Should not be able to create a user with an invalid email', () => {
+    const userProps = {
+      name: 'Frederico',
+      email: 'fredericocapagmail',
+      password: '543242',
+    };
+
+    expect(() => new User(userProps)).toThrow();
+  });
+
   test('Should be able to create a user with correct props', () => {
     const userProps = {
+      id: 220,
       name: 'Frederico',
       email: 'fredericocapa@gmail.com',
       password: '543242',
+      createdAt: new Date(),
     };
 
     const user = new User(userProps);

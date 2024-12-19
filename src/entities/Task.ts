@@ -5,7 +5,7 @@ export interface TaskProps {
   title: string;
   description?: string;
   status: string;
-  userId: string;
+  userId: number;
   createdAt?: Date;
 }
 

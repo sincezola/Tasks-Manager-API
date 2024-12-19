@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { TaskProps } from '../entities/Tasks';
+import type { TaskProps } from '../entities/Task';
 
 export class TaskVerifier {
   private taskSchema = z.object({
@@ -10,12 +10,12 @@ export class TaskVerifier {
       .max(50, 'O título deve ter no máximo 50 caracteres'),
     description: z
       .string()
-      .min(5, 'A descrição deve ter pelo menos 5 caracteres')
+      .min(8, 'A descrição deve ter pelo menos 5 caracteres')
       .max(500, 'A descrição deve ter no máximo 500 caracteres'),
     status: z.enum(['pendente', 'em progresso', 'concluído'], {
       errorMap: () => ({ message: 'Status inválido' }),
     }),
-    userId: z.string().min(1, 'O id é inválido'),
+    userId: z.number().min(1, 'O id é inválido'),
     createdAt: z.date().optional(),
   });
 
