@@ -1,4 +1,6 @@
+import type { httpStatusCode } from "src/utils/httpResponses/httpResponseStatusCodes";
+
 export type ApiResponse<T> = {
-  message?: string,
-  data: T,
+  statusCode: httpStatusCode,
+  body: T,
 }

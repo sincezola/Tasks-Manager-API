@@ -8,13 +8,15 @@ export class TaskVerifier {
       .string()
       .min(4, 'O título deve ter pelo menos 4 caracteres')
       .max(50, 'O título deve ter no máximo 50 caracteres'),
-    description: z
+    description: z.string().nullable().default(""), // The description is optional
+    status: z
       .string()
-      .min(8, 'A descrição deve ter pelo menos 5 caracteres')
-      .max(500, 'A descrição deve ter no máximo 500 caracteres'),
-    status: z.enum(['pendente', 'em progresso', 'concluído'], {
-      errorMap: () => ({ message: 'Status inválido' }),
-    }),
+      .transform((val) => val.toLowerCase()) // Transforma para minúsculas
+      .pipe(
+        z.enum(['pendente', 'em progresso', 'concluído'], {
+          errorMap: () => ({ message: 'Status inválido' }),
+        }),
+      ),
     userId: z.number().min(1, 'O id é inválido'),
     createdAt: z.date().optional(),
   });

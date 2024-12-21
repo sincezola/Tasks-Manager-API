@@ -1,4 +1,16 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Length, Matches, MaxLength, Min, MinLength } from "class-validator";
+import { Transform } from 'class-transformer';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
 
 export class CreateTaskDto {
   // For posts routes
@@ -13,14 +25,16 @@ export class CreateTaskDto {
   title: string;
 
   @IsOptional()
-  @Length(8, 500)
+  @Length(5, 500)
   description?: string;
 
   @IsNotEmpty()
   @IsString()
-  @MinLength(8)
-  @MaxLength(9)
-  status: string; // Pendente ou Concluida
+  @Transform(({ value }) => value.toLowerCase()) // Transforma para minúsculas
+  @IsIn(['pendente', 'concluida', 'em progresso'], {
+    message: 'O status deve ser "pendente", "concluida" ou "em progresso"',
+  })
+  status: string;
 
   @IsNotEmpty()
   @IsNumber()
