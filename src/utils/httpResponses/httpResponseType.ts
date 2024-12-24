@@ -1,10 +1,12 @@
-import type { ApiResponse } from "src/types/ApiResponse";
-import { httpStatusCode } from "./httpResponseStatusCodes";
+import type { ApiResponse } from 'src/types/ApiResponse';
+import { httpStatusCode } from './httpResponseStatusCodes';
 
-export const badRequest = (message: string): ApiResponse<string> => {
+export const badRequest = (message: string): ApiResponse<Object> => {
   return {
     statusCode: httpStatusCode.BAD_REQUEST,
-    body: message,
+    body: {
+      message,
+    },
   };
 };
 
@@ -22,14 +24,16 @@ export const created = <T>(body: any): ApiResponse<T> => {
   };
 };
 
-export const internalServerError = (): ApiResponse<string> => {
+export const internalServerError = (): ApiResponse<Object> => {
   return {
     statusCode: httpStatusCode.INTERNAL_SERVER_ERROR,
-    body: "Something went wrong.",
+    body: {
+      message: 'Something went wrong.',
+    },
   };
 };
 
-export const cannotFound = ( body: string ): ApiResponse<string> => {
+export const cannotFound = (body: string): ApiResponse<string> => {
   return {
     statusCode: httpStatusCode.NOT_FOUND,
     body,

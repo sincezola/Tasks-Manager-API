@@ -15,7 +15,7 @@ import {
 export class CreateTaskDto {
   // For posts routes
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Title cannot be empty' })
   @IsString()
   @Matches(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, {
     message: 'Title must only contain alphabetic characters',

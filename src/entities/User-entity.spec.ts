@@ -1,7 +1,7 @@
 import { User } from './User';
 
 describe('Instanciate an User', () => {
-  test('Should not be able to create a user without name', () => {
+  it('Should not be able to create a user without name', () => {
     const userProps = {
       name: '',
       email: 'fredericocapa@gmail.com',
@@ -11,7 +11,7 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
-  test('Should not be able to create a user with a id minor than 1', () => {
+  it('Should not be able to create a user with a id minor than 1', () => {
     const userProps = {
       id: 0,
       name: 'Frederico',
@@ -22,7 +22,7 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
-  test('Should not be able to create a user with an invalid email', () => {
+  it('Should not be able to create a user with an invalid email', () => {
     const userProps = {
       name: 'Frederico',
       email: 'fredericocapagmail',
@@ -32,7 +32,7 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
-  test('Should not be able to create a user with a password that has less than 6 characters', () => {
+  it('Should not be able to create a user with a password that has less than 6 characters', () => {
     const userProps = {
       name: 'Frederico',
       email: 'fredericocapagmail.com',
@@ -42,7 +42,7 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
-  test('Should not be able to create a user with an invalid email', () => {
+  it('Should not be able to create a user with an invalid email', () => {
     const userProps = {
       name: 'Frederico',
       email: 'fredericocapagmail',
@@ -52,7 +52,7 @@ describe('Instanciate an User', () => {
     expect(() => new User(userProps)).toThrow();
   });
 
-  test('Should be able to create a user with correct props', () => {
+  it('Should be able to create a user with correct props', () => {
     const userProps = {
       id: 220,
       name: 'Frederico',

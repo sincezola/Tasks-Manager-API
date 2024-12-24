@@ -11,7 +11,7 @@ export class TasksService implements TasksServiceProtocol {
 
   constructor(private readonly tasksRepository: TasksRepository) {}
 
-  async createTask(createTaskDTO: CreateTaskDto): Promise<ApiResponse<Task | string>> {
+  async createTask(createTaskDTO: CreateTaskDto): Promise<ApiResponse<Task | Object>> {
     try {
       const createdTask = await this.tasksRepository.createTask(createTaskDTO);
 

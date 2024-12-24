@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db" // Banco de dados SQLite
+  url      = "file:./test.db" // Banco de dados SQLite para Testes
 }
 
 generator client {
@@ -9,7 +9,7 @@ generator client {
 
 // User Model
 model User {
-  id        Int      @id @default(autoincrement()) // PK
+  id        Int      @id // In test db the id dont need to be autoincrement
   name      String
   email     String   @unique
   password  String

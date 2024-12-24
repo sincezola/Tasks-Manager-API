@@ -5,5 +5,5 @@ import type { CreateTaskDto } from 'src/types/DTOS/Create-TaskDTO';
 export abstract class TasksServiceProtocol {
   abstract createTask(
     createTaskDTO: CreateTaskDto,
-  ): Promise<ApiResponse<Task | string>>;
+  ): Promise<ApiResponse<Task | Object>>;
 }
