@@ -52,7 +52,7 @@ describe('Find-TaskById Tests (e2e)', () => {
     await app.close();
   });
 
-  it('Should not found a user with a NaN id', async () => {
+  it('Should not found a task with a NaN id', async () => {
     const response = await request(app.getHttpServer()).get(
       '/management/task/Jhon',
     );
@@ -63,7 +63,7 @@ describe('Find-TaskById Tests (e2e)', () => {
     expect(response.body.message[0]).toBe('O valor deve ser maior que 0.');
   });
 
-  it('Should not found a user with a not existent id', async () => {
+  it('Should not found a task with a not existent id', async () => {
     const response = await request(app.getHttpServer()).get(
       '/management/task/99999',
     );
@@ -74,7 +74,7 @@ describe('Find-TaskById Tests (e2e)', () => {
     expect(response.body.message).toBe('Cannot find task with id 99999');
   });
 
-  it('Should found a user with an existing id', async () => {
+  it('Should found a task with an existing id', async () => {
     const response = await request(app.getHttpServer()).get(
       '/management/task/1',
     );
