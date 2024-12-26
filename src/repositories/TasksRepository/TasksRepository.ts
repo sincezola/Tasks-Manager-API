@@ -36,4 +36,20 @@ export class TasksRepository implements TasksRepositoryProtocol {
       console.log(createTaskError);
     }
   }
+
+  async findTaskById(id: number): Promise<Task | null> {
+    try {
+      const possibleTask = await this.prisma.task.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      if (!possibleTask) return null;
+
+      return new Task(possibleTask);
+    } catch (findTaskError) {
+      console.log(findTaskError);
+    }
+  }
 }

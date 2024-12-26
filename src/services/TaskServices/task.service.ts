@@ -4,12 +4,14 @@ import {
   cannotFound,
   created,
   internalServerError,
+  ok,
 } from 'src/utils/httpResponses/httpResponseType';
 import { UsersRepository } from 'src/repositories/UsersRepository/UsersRepository';
 import type { TasksServiceProtocol } from './TaskServiceProtocol';
 import type { Task } from '../../entities/Task';
 import type { CreateTaskDto } from 'src/types/DTOS/Create-TaskDTO';
 import type { ApiResponse } from 'src/types/ApiResponse';
+import type { IdDTO } from 'src/types/DTOS/IdDTO';
 
 @Injectable()
 export class TasksService implements TasksServiceProtocol {
@@ -36,6 +38,19 @@ export class TasksService implements TasksServiceProtocol {
       return created(createdTask);
     } catch (taskCreateRepositoryError) {
       console.log(taskCreateRepositoryError);
+    }
+  }
+
+  async findTaskById(id: IdDTO): Promise<ApiResponse<Task | Object>> {
+    try {
+      const possibleTask = await this.tasksRepository.findTaskById(id.id);
+
+      if (!possibleTask)
+        return cannotFound('Cannot find task with id ' + id.id);
+
+      return ok(possibleTask);
+    } catch (taskFindRepositoryError) {
+      console.log(taskFindRepositoryError);
     }
   }
 }
