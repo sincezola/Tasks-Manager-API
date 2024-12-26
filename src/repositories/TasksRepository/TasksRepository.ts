@@ -1,8 +1,8 @@
 import { Task } from 'src/entities/Task';
+import { PrismaService } from 'src/infra/db/Prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 import type { CreateTaskDto } from 'src/types/DTOS/Create-TaskDTO';
 import type { TasksRepositoryProtocol } from './TasksRepositoryProtocol';
-import { PrismaService } from 'src/db/Prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TasksRepository implements TasksRepositoryProtocol {
@@ -24,8 +24,8 @@ export class TasksRepository implements TasksRepositoryProtocol {
         status,
         userId,
       };
-      
-      if (description && description !== "") {
+
+      if (description && description !== '') {
         data.description = description; // Adiciona description apenas se existir
       }
 

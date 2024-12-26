@@ -1,11 +1,10 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
-import { TasksService } from './services/TaskServices/task.service';
+import { TasksService } from '../services/TaskServices/task.service';
+import type { TaskControllerProtocol } from '../controllers-protocols/TaskControllerProtocol';
 import type { Response } from 'express';
 
 // DTO's
-import { CreateTaskDto } from './types/DTOS/Create-TaskDTO';
-import { ApiResponse } from './types/ApiResponse';
-import type { TaskControllerProtocol } from './ControllersProtocols/TaskControllerProtocol';
+import { CreateTaskDto } from '../types/DTOS/Create-TaskDTO';
 
 @Controller('/management')
 export class TasksController implements TaskControllerProtocol {
@@ -28,9 +27,9 @@ export class TasksController implements TaskControllerProtocol {
       props.description = description;
     }
 
-    const taskTryingToBeCreated = await this.tasksService.createTask(props);
+    const response = await this.tasksService.createTask(props);
 
-    const { statusCode, body } = taskTryingToBeCreated;
+    const { statusCode, body } = response;
 
     return res.status(statusCode).json(body);
   }

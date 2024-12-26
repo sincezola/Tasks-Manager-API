@@ -33,10 +33,12 @@ export const internalServerError = (): ApiResponse<Object> => {
   };
 };
 
-export const cannotFound = (body: string): ApiResponse<string> => {
+export const cannotFound = (body: string): ApiResponse<Object> => {
   return {
     statusCode: httpStatusCode.NOT_FOUND,
-    body,
+    body: {
+      message: body,
+    },
   };
 };
 

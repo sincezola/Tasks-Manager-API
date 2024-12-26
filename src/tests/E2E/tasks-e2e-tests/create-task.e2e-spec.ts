@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../../app.module';
-import request from 'supertest';
 import { ValidationPipe } from '@nestjs/common';
-import { PrismaService } from 'src/db/Prisma/prisma.service';
+import { PrismaService } from 'src/infra/db/Prisma/prisma.service';
+import request from 'supertest';
 
 describe('Create-Task Tests (e2e)', () => {
   let app: INestApplication;
@@ -13,7 +13,7 @@ describe('Create-Task Tests (e2e)', () => {
       imports: [AppModule],
     })
       .overrideProvider(PrismaService)
-      .useValue(new PrismaService('file:./test.db'))
+      .useValue(new PrismaService())
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -29,8 +29,6 @@ describe('Create-Task Tests (e2e)', () => {
     await app.init();
 
     const prisma = app.get(PrismaService);
-
-    await prisma.cleanDatabase();
 
     await prisma.user.create({
       data: {
@@ -78,6 +76,22 @@ describe('Create-Task Tests (e2e)', () => {
     expect(response.status).toBe(400);
 
     expect(response.body.message).toContain('Title cannot be empty');
+  });
+
+  it('Should not create a new task with a id that does not have an user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/management/create-task')
+      .send({
+        title: 'Lavar a casa',
+        description: 'Tenho que lavar a casa amanhã',
+        status: 'Pendente',
+        userId: 999999,
+      });
+
+    console.log('Response =', response.body);
+    expect(response.status).toBe(404);
+
+    expect(response.body.message).toContain('Cannot found user with id 999999');
   });
 
   it('Should create a new task successfully', async () => {

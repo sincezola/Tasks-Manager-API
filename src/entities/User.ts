@@ -1,4 +1,4 @@
-import propsVerifier from '../verifiers/userPropsVerifier';
+import propsVerifier from '../class-instanciate-verifiers/userPropsVerifier';
 
 export interface UserProps {
   id?: number;

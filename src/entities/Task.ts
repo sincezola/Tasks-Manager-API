@@ -1,4 +1,4 @@
-import propsVerifier from '../verifiers/taskPropsVerifier';
+import propsVerifier from '../class-instanciate-verifiers/taskPropsVerifier';
 
 export interface TaskProps {
   id?: number;
