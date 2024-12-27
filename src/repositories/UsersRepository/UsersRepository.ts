@@ -24,4 +24,22 @@ export class UsersRepository implements UsersRepositoryProtocol {
       console.log(findUserError);
     }
   }
+
+  async findUserByName(name: string): Promise<User | null> {
+    try {
+      const possibleUser = await this.prisma.user.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (!possibleUser) {
+        return null;
+      }
+
+      return new User(possibleUser);
+    } catch (findUserError) {
+      console.log(findUserError);
+    }
+  }
 }

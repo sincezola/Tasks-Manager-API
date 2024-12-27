@@ -29,7 +29,7 @@ export class TasksService implements TasksServiceProtocol {
       const userExists = await this.usersRepository.findUserById(userId);
 
       if (!userExists)
-        return cannotFound('Cannot found user with id ' + userId);
+        return cannotFound('Cannot find user with id: ' + userId);
 
       const createdTask = await this.tasksRepository.createTask(createTaskDTO);
 
@@ -46,7 +46,7 @@ export class TasksService implements TasksServiceProtocol {
       const possibleTask = await this.tasksRepository.findTaskById(id.id);
 
       if (!possibleTask)
-        return cannotFound('Cannot find task with id ' + id.id);
+        return cannotFound('Cannot find task with id: ' + id.id);
 
       return ok(possibleTask);
     } catch (taskFindRepositoryError) {

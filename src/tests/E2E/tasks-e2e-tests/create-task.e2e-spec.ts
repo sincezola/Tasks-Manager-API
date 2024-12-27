@@ -91,7 +91,7 @@ describe('Create-Task Tests (e2e)', () => {
     console.log('Response =', response.body);
     expect(response.status).toBe(404);
 
-    expect(response.body.message).toContain('Cannot found user with id 999999');
+    expect(response.body.message).toContain('Cannot find user with id: 999999');
   });
 
   it('Should create a new task successfully', async () => {

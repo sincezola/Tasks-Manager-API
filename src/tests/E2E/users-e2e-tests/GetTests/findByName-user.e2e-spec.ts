@@ -43,28 +43,36 @@ describe('Find-UserById Tests (e2e)', () => {
     await app.close();
   });
 
-  it('Should not found a user with a NaN id', async () => {
-    const response = await request(app.getHttpServer()).get('/user/Jhon');
+  it('Should not find a user with a wrong name', async () => {
+    const response = await request(app.getHttpServer()).get(
+      '/user/by-name?name=6h@#on+$oe',
+    );
 
     console.log('Response =', response.body);
     expect(response.status).toBe(400);
 
-    expect(response.body.message[0]).toBe('O valor deve ser maior que 0.');
+    expect(response.body.message[0]).toBe(
+      'Name must only contain alphabetic characters and spaces.',
+    );
   });
 
-  it('Should not found a user with a not existent id', async () => {
+  it('Should not find a user with a not existent name', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/user/99999',
+      '/user/by-name?name=Josh+William',
     );
 
     console.log('Response =', response.body);
     expect(response.status).toBe(404);
 
-    expect(response.body.message).toBe('Cannot find user with id 99999');
+    expect(response.body.message).toBe(
+      'Cannot find user with name: Josh William',
+    );
   });
 
-  it('Should found a user with an existing id', async () => {
-    const response = await request(app.getHttpServer()).get('/user/1');
+  it('Should find a user with an existing name', async () => {
+    const response = await request(app.getHttpServer()).get(
+      '/user/by-name?name=Jhon+Doe',
+    );
 
     console.log('Response =', response.body);
     expect(response.status).toBe(200);

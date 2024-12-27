@@ -4,7 +4,7 @@ import request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { PrismaService } from 'src/infra/db/Prisma/prisma.service';
 
-describe('Find-TaskById Tests (e2e)', () => {
+describe('FindUserById Tests (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -37,24 +37,15 @@ describe('Find-TaskById Tests (e2e)', () => {
         password: '%)#&%^&%$!@(',
       },
     });
-
-    await prisma.task.create({
-      data: {
-        title: 'Lavar a casa',
-        description: 'Tenho que lavar a casa amanhã',
-        status: 'Pendente',
-        userId: 1,
-      },
-    });
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it('Should not find a task with a NaN id', async () => {
+  it('Should not find a user with a NaN id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/Jhon',
+      '/user/by-id?id=Jhon',
     );
 
     console.log('Response =', response.body);
@@ -63,39 +54,36 @@ describe('Find-TaskById Tests (e2e)', () => {
     expect(response.body.message[0]).toBe('O valor deve ser maior que 0.');
   });
 
-  it('Should not find a task with a not existent id', async () => {
+  it('Should not find a user with a not existent id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/99999',
+      '/user/by-id?id=99999',
     );
 
     console.log('Response =', response.body);
     expect(response.status).toBe(404);
 
-    expect(response.body.message).toBe('Cannot find task with id: 99999');
+    expect(response.body.message).toBe('Cannot find user with id: 99999');
   });
 
-  it('Should find a task with an existing id', async () => {
+  it('Should find a user with an existing id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/1',
+      '/user/by-id?id=1',
     );
 
     console.log('Response =', response.body);
     expect(response.status).toBe(200);
 
-    expect(response.body.taskProps.title).toBe('Lavar a casa');
-    expect(response.body.taskProps.description).toBe(
-      'Tenho que lavar a casa amanhã',
-    );
-    expect(response.body.taskProps.status).toBe('Pendente');
-    expect(response.body.taskProps.userId).toBe(1);
+    expect(response.body.userProps.name).toBe('Jhon Doe');
+    expect(response.body.userProps.email).toBe('jhondoe@example.com');
+    expect(response.body.userProps.password).toBe('%)#&%^&%$!@(');
 
-    expect(response.body.taskProps.id).toBeDefined();
-    expect(typeof response.body.taskProps.id).toBe('number');
-    expect(response.body.taskProps.id).toBe(1);
-    expect(response.body.taskProps.id).toBeGreaterThan(0);
+    expect(response.body.userProps.id).toBeDefined();
+    expect(typeof response.body.userProps.id).toBe('number');
+    expect(response.body.userProps.id).toBe(1);
+    expect(response.body.userProps.id).toBeGreaterThan(0);
 
-    expect(response.body.taskProps.createdAt).toBeDefined();
-    expect(new Date(response.body.taskProps.createdAt).toString()).not.toBe(
+    expect(response.body.userProps.createdAt).toBeDefined();
+    expect(new Date(response.body.userProps.createdAt).toString()).not.toBe(
       'Invalid Date',
     );
   });
