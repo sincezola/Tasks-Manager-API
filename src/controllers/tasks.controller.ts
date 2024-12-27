@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { TasksService } from '../services/TaskServices/task.service';
 import type { TaskControllerProtocol } from '../controllers-protocols/TaskControllerProtocol';
 import type { Response } from 'express';
@@ -11,9 +11,9 @@ import { IdDTO } from 'src/types/DTOS/IdDTO';
 export class TasksController implements TaskControllerProtocol {
   constructor(private tasksService: TasksService) {}
 
-  @Get('/task/:id')
+  @Get('/task')
   async findTaskById(
-    @Param() id: IdDTO,
+    @Query() id: IdDTO,
     @Res() res: Response,
   ): Promise<Response> {
     const response = await this.tasksService.findTaskById(id);

@@ -54,7 +54,7 @@ describe('Find-TaskById Tests (e2e)', () => {
 
   it('Should not find a task with a NaN id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/Jhon',
+      '/management/task?id=Jhon',
     );
 
     console.log('Response =', response.body);
@@ -65,7 +65,7 @@ describe('Find-TaskById Tests (e2e)', () => {
 
   it('Should not find a task with a not existent id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/99999',
+      '/management/task?id=99999',
     );
 
     console.log('Response =', response.body);
@@ -76,7 +76,7 @@ describe('Find-TaskById Tests (e2e)', () => {
 
   it('Should find a task with an existing id', async () => {
     const response = await request(app.getHttpServer()).get(
-      '/management/task/1',
+      '/management/task?id=1',
     );
 
     console.log('Response =', response.body);
