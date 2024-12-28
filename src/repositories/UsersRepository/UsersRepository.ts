@@ -7,6 +7,18 @@ import type { UsersRepositoryProtocol } from './UsersRepositoryProtocol';
 export class UsersRepository implements UsersRepositoryProtocol {
   constructor(private prisma: PrismaService) {}
 
+  async getAllUsers(): Promise<User[]> {
+    try {
+      const users = await this.prisma.user.findMany();
+
+      return users.map((user) => {
+        return new User(user);
+      });
+    } catch (getUsersError) {
+      console.log(getUsersError);
+    }
+  }
+
   async findUserById(id: number): Promise<User | null> {
     try {
       const possibleUser = await this.prisma.user.findFirst({

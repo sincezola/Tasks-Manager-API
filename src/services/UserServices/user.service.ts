@@ -11,6 +11,12 @@ import type { NameDTO } from 'src/types/DTOS/NameDTO';
 export class UsersService implements UsersServiceProtocol {
   constructor(private repository: UsersRepository) {}
 
+  async getAllUsers(): Promise<ApiResponse<User[]>> {
+    const users = await this.repository.getAllUsers();
+
+    return ok(users);
+  }
+
   async findUserById(id: IdDTO): Promise<ApiResponse<User | Object>> {
     const possibleUser = await this.repository.findUserById(id.id);
 

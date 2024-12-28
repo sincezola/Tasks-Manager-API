@@ -11,6 +11,15 @@ import { NameDTO } from 'src/types/DTOS/NameDTO';
 export class UsersController implements UserControllerProtocol {
   constructor(private userService: UsersService) {}
 
+  @Get('/list-users')
+  async getAllUsers(@Res() res: Response): Promise<Response> {
+    const response = await this.userService.getAllUsers();
+
+    const { statusCode, body } = response;
+
+    return res.status(statusCode).json(body);
+  }
+
   @Get('/by-id')
   async findUserById(
     @Query() id: IdDTO,
