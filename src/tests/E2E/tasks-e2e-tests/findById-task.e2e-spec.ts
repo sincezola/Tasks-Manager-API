@@ -31,7 +31,6 @@ describe('Find-TaskById Tests (e2e)', () => {
 
     await prisma.user.create({
       data: {
-        id: 1,
         name: 'Jhon Doe',
         email: 'jhondoe@example.com',
         password: '%)#&%^&%$!@(',
