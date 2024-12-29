@@ -6,4 +6,5 @@ export abstract class UserControllerProtocol {
   abstract getAllUsers(res: Response): Promise<Response>;
   abstract findUserById(id: IdDTO, res: Response): Promise<Response>;
   abstract findUserByName(name: NameDTO, res: Response): Promise<Response>;
+  abstract getAllTasksOfUser(id: IdDTO, res: Response): Promise<Response>;
 }

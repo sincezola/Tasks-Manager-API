@@ -43,4 +43,16 @@ export class UsersController implements UserControllerProtocol {
 
     return res.status(statusCode).json(body);
   }
+
+  @Get('/:id/tasks')
+  async getAllTasksOfUser(
+    @Param() id: IdDTO,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const response = await this.userService.getAllTasksOfUser(id);
+
+    const { statusCode, body } = response;
+
+    return res.status(statusCode).json(body);
+  }
 }
