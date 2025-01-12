@@ -52,4 +52,18 @@ export class TasksRepository implements TasksRepositoryProtocol {
       console.log(findTaskError);
     }
   }
+
+  async deleteTask(id: number): Promise<Task> {
+    try {
+      const deletedTask = await this.prisma.task.delete({
+        where: {
+          id,
+        },
+      });
+
+      return new Task(deletedTask);
+    } catch (deleteTaskError) {
+      console.log(deleteTaskError);
+    }
+  }
 }

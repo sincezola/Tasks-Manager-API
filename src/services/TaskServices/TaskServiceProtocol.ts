@@ -8,4 +8,5 @@ export abstract class TasksServiceProtocol {
   abstract createTask(
     createTaskDTO: CreateTaskDto,
   ): Promise<ApiResponse<Task | Object>>;
+  abstract deleteTask(id: IdDTO): Promise<ApiResponse<Task | Object>>;
 }

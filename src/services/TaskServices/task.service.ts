@@ -53,4 +53,28 @@ export class TasksService implements TasksServiceProtocol {
       console.log(taskFindRepositoryError);
     }
   }
+
+  async deleteTask(id: IdDTO): Promise<ApiResponse<Task | Object>> {
+    try {
+      const thisTaskExists = await this.findTaskById(id);
+
+      if (
+        thisTaskExists.statusCode !== 200 &&
+        thisTaskExists.statusCode === 404
+      )
+        return cannotFound(thisTaskExists.body);
+
+      if (
+        thisTaskExists.statusCode !== 200 &&
+        thisTaskExists.statusCode === 500
+      )
+        return internalServerError();
+
+      const deletedTask = await this.tasksRepository.deleteTask(id.id);
+
+      return ok(deletedTask);
+    } catch (taskDeleteRepositoryError) {
+      console.log(taskDeleteRepositoryError);
+    }
+  }
 }

@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { TasksService } from '../services/TaskServices/task.service';
 import type { TaskControllerProtocol } from '../controllers-protocols/TaskControllerProtocol';
 import type { Response } from 'express';
@@ -43,6 +52,18 @@ export class TasksController implements TaskControllerProtocol {
     const response = await this.tasksService.createTask(props);
 
     const { statusCode, body } = response;
+
+    return res.status(statusCode).json(body);
+  }
+
+  @Delete('/delete-task/:id')
+  async deleteTask(
+    @Param() id: IdDTO,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const possibleDeletedTask = await this.tasksService.deleteTask(id);
+
+    const { statusCode, body } = possibleDeletedTask;
 
     return res.status(statusCode).json(body);
   }
